@@ -1,0 +1,31 @@
+from app.models.entities import (
+    AnalysisJob,
+    ApiKey,
+    AuditLog,
+    DetectionResult,
+    DuplicateMatch,
+    FileMetadata,
+    ForensicEvidence,
+    InvestigationReport,
+    ModelVersion,
+    SecurityScanResult,
+    UploadedFile,
+    User,
+    UserSession,
+)
+
+__all__ = [
+    "AnalysisJob",
+    "ApiKey",
+    "AuditLog",
+    "DetectionResult",
+    "DuplicateMatch",
+    "FileMetadata",
+    "ForensicEvidence",
+    "InvestigationReport",
+    "ModelVersion",
+    "SecurityScanResult",
+    "UploadedFile",
+    "User",
+    "UserSession",
+]

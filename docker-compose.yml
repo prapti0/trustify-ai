@@ -1,0 +1,85 @@
+services:
+  api:
+    build: ./backend
+    environment:
+      ENVIRONMENT: development
+      DATABASE_URL: postgresql+psycopg://trustify:trustify@postgres:5432/trustify
+      REDIS_URL: redis://redis:6379/0
+      QDRANT_URL: http://qdrant:6333
+      STORAGE_BACKEND: local
+      LOCAL_STORAGE_DIR: /data/storage
+      CORS_ORIGINS: http://localhost:5173
+      JWT_SECRET: ""
+      ANALYSIS_MODE: celery
+    ports:
+      - "8000:8000"
+    volumes:
+      - api_storage:/data/storage
+    depends_on:
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "python",
+          "-c",
+          "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/api/v1/health')",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  worker:
+    profiles: ["workers"]
+    build: ./backend
+    command: celery -A app.workers.celery_app:celery_app worker --loglevel=INFO
+    environment:
+      DATABASE_URL: postgresql+psycopg://trustify:trustify@postgres:5432/trustify
+      REDIS_URL: redis://redis:6379/0
+      QDRANT_URL: http://qdrant:6333
+      STORAGE_BACKEND: local
+      LOCAL_STORAGE_DIR: /data/storage
+      ANALYSIS_MODE: celery
+    volumes:
+      - api_storage:/data/storage
+    depends_on:
+      redis:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: trustify
+      POSTGRES_PASSWORD: trustify
+      POSTGRES_DB: trustify
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U trustify -d trustify"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  qdrant:
+    image: qdrant/qdrant:v1.12.5
+    ports:
+      - "6333:6333"
+
+volumes:
+  postgres_data:
+  api_storage:

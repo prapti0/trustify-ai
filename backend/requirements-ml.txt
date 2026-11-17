@@ -1,0 +1,17 @@
+# Optional detectors. Installing these packages does not enable a detection result.
+# A model is available only after a versioned wrapper is registered and evaluated.
+# Review each license before use. Do not train a foundation model from scratch.
+
+torch>=2.5.0
+transformers>=4.47.0
+Pillow>=10.4.0
+opencv-python-headless>=4.10.0
+librosa>=0.10.2
+openai-whisper>=20240930
+langgraph>=0.2.60
+google-genai>=1.0.0
+qdrant-client>=1.12.0
+# Review each model card license before production use.
+# Default image AI model: umm-maybe/AI-image-detector
+# Default deepfake model: prithivMLmods/Deep-Fake-Detector-v2-Model
+# Override via AI_IMAGE_MODEL_ID / DEEPFAKE_IMAGE_MODEL_ID. Review each model card license.

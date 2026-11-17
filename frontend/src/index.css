@@ -1,0 +1,117 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root,
+[data-theme="dark"] {
+  --bg: #07111f;
+  --elevated: #0c1828;
+  --card: #102033;
+  --line: #24395c;
+  --text: #e8eef8;
+  --muted: #93a4bf;
+  --blue: #2f6bff;
+  --violet: #7c6bff;
+  --ok: #1f9d78;
+  --warn: #c4922a;
+  --danger: #d15a63;
+  --shadow: 0 12px 28px rgba(2, 8, 20, 0.28);
+  color-scheme: dark;
+}
+
+[data-theme="light"] {
+  --bg: #f4f7fb;
+  --elevated: #ffffff;
+  --card: #ffffff;
+  --line: #d5deea;
+  --text: #122033;
+  --muted: #5c6d84;
+  --blue: #1d4ed8;
+  --violet: #5b4cdb;
+  --ok: #0f7a5a;
+  --warn: #9a6b12;
+  --danger: #b4333c;
+  --shadow: 0 10px 24px rgba(18, 32, 51, 0.06);
+  color-scheme: light;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+  font-family: "IBM Plex Sans", "Segoe UI", sans-serif;
+}
+
+:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 2px;
+}
+
+@layer components {
+  .card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border-radius: 10px;
+    padding: 0.65rem 1rem;
+    font-size: 0.925rem;
+    font-weight: 560;
+    line-height: 1.2;
+  }
+
+  .btn:disabled {
+    cursor: not-allowed;
+    opacity: 0.55;
+  }
+
+  .btn-primary {
+    background: var(--blue);
+    color: white;
+  }
+
+  .btn-secondary {
+    border: 1px solid var(--line);
+    background: transparent;
+    color: var(--text);
+  }
+
+  .field {
+    width: 100%;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: var(--elevated);
+    color: var(--text);
+    padding: 0.7rem 0.8rem;
+  }
+
+  .label {
+    display: block;
+    margin-bottom: 0.35rem;
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+
+  .muted {
+    color: var(--muted);
+  }
+
+  .report-sheet {
+    background: #f7f8fb;
+    color: #152033;
+    border: 1px solid #e1e6ef;
+    border-radius: 18px;
+  }
+
+  .report-sheet .muted {
+    color: #5c6b80;
+  }
+}
